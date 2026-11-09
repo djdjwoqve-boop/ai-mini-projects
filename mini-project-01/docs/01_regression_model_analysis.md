@@ -9,30 +9,30 @@
 
 - **주 평가 지표:** MAE
 - **보조 지표:** RMSE, R²
-- **모델 비교에 사용한 데이터:** ___
-- **MAE를 주요 지표로 선택한 이유:** ___
+- **모델 비교에 사용한 데이터:** 검증
+- **MAE를 주요 지표로 선택한 이유:** 절대 오차 값이라서 다른 지표에 비해 변형이 없어서 직관적
 
 ## 2. 모델별 실험 결과 (CP-04~CP-06)
 
 대표 설정별 Train MAE / Validation MAE를 기록합니다. 전체 실험 결과는 Notebook의 `results_df`에서 확인합니다.
 
-- **DummyRegressor (mean):** Train ___ / Validation ___
-- **LinearRegression:** Train ___ / Validation ___
-- **DecisionTreeRegressor (`max_depth=___`):** Train ___ / Validation ___
-- **RandomForestRegressor (설정 ___):** Train ___ / Validation ___
+- **DummyRegressor (mean):** Train 119 / Validation 194
+- **LinearRegression:** Train 55 / Validation 99
+- **DecisionTreeRegressor (`max_depth=6`):** Train 61 / Validation 106
+- **RandomForestRegressor (설정 100,15):** Train 22 / Validation 64
 
 **실험에서 발견한 점**
 
-- **Decision Tree 깊이 변화에 따른 성능:** ___
-- **Random Forest 두 설정의 차이:** ___
-- **Train·Validation 성능 차이에서 관찰한 현상:** ___ (`001_data_analysis`의 2절 `cnt` 평균 차이와 연결해 작성)
+- **Decision Tree 깊이 변화에 따른 성능:** MAE가 감소
+- **Random Forest 두 설정의 차이:** B가 검증에서 성능 떨어진다 
+- **Train·Validation 성능 차이에서 관찰한 현상:**검증과 훈련 데이터의 cnt 차이가 영향을 줄 수 있다고 보입니다. 데이(`001_data_analysis`의 2절 `cnt` 평균 차이와 연결해 작성)
 
 ## 3. 예측 오류 분석 (CP-07)
 
-- **비교한 후보 모델 2개(Validation MAE 상위 2개):** ___ / ___
-- **실제값·예측값 그래프에서 관찰한 점:** ___
-- **시간대별 MAE가 큰 구간:** ___
-- **모델이 상대적으로 잘 예측하지 못하는 상황:** ___
+- **비교한 후보 모델 2개(Validation MAE 상위 2개):** 랜덤포레스트 A / B
+- **실제값·예측값 그래프에서 관찰한 점:** B가 훈련 데이터 수치가 좋지만 A가 검증에 유리하다 
+- **시간대별 MAE가 큰 구간:** 17시
+- **모델이 상대적으로 잘 예측하지 못하는 상황:** 대여량이 많은 시간대입니다.
 - **(선택) 특성 중요도에서 확인한 점:** ___
 
 **분석:** 이 오류가 최종 모델 선택에 어떤 영향을 주었는지 작성합니다.  
@@ -40,21 +40,21 @@ ___
 
 ## 4. 최종 모델과 Test 평가 (CP-08)
 
-- **Test 확인 전에 선택한 최종 모델·설정:** ___
-- **재학습에 사용한 데이터(Train + Validation) 크기:** ___행
-- **Test MAE:** ___
-- **Test RMSE:** ___
-- **Test R²:** ___
-- **모델 저장·재로딩 및 예측 결과:** ___
+- **Test 확인 전에 선택한 최종 모델·설정:** 랜덤 포레스트 B 
+- **재학습에 사용한 데이터(Train + Validation) 크기:** 14755행
+- **Test MAE:** 71
+- **Test RMSE:** 100
+- **Test R²:** 0.78
+- **모델 저장·재로딩 및 예측 결과:** True
 
 **해석:** 최종 Test 결과로 알게 된 점을 1~2문장으로 작성합니다.  
-___
+어떻게 해석해야 할지 모르겠습니다 
 
 > Test는 최종 평가용입니다. 서로 다른 데이터 집합에서 나온 점수를 직접 개선율로 비교하지 않습니다.
 
 ## 5. 실험 요약
 
-- **가장 중요한 실험 결과:** ___
-- **남아 있는 모델의 한계:** ___
+- **가장 중요한 실험 결과:** RF-B의 예측값이 비교 모델 중에서 1,2위를 다투는 성능이었습니다.
+- **남아 있는 모델의 한계:** 값이 급격하게 달라지는 부분에서 오류가 커졌습니다.
 
 > 최종 모델을 **왜 선택했는지**는 `adr.md`의 의사결정 ②에 작성합니다.
